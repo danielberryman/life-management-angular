@@ -11,6 +11,7 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class SectionsComponent implements OnInit {
   @Output() openModal = new EventEmitter();
+  @Output() deleteSection = new EventEmitter();
   @Input() section;
 
   closeResult = '';
@@ -59,4 +60,13 @@ export class SectionsComponent implements OnInit {
   open(content) {
     this.modalService.open(content, this.size);
   }
+
+  edit() {
+
+  }
+
+  onDeleteSection() {
+    this.deleteSection.emit(this.section.id);
+  }
+
 }

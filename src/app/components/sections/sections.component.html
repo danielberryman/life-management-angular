@@ -2,7 +2,9 @@
     <div class="container" *ngIf="selectedTab">
         <div class="modal-header" style="border: none">
             <h1>{{section.title | uppercase}}</h1>
-            <button class="close" (click)="modal.close('Cross click')">&times;</button>
+            <button class="btn btn-success edit" (click)="edit()">Edit</button>
+            <button class="btn btn-danger delete" (click)="onDeleteSection(); modal.close('Cross click')">Delete</button>
+            <button class="section-button close" (click)="modal.close('Cross click')">&times;</button>
         </div>
         <div class="modal-body">
             <ul class="nav nav-tabs">
@@ -20,7 +22,7 @@
 </ng-template>
 
 <div class="wrapper">
-    <button (click)="open(content)">{{section.title | uppercase}}</button>
+    <button class="section-button" (click)="open(content)">{{section.title | uppercase}}</button>
     <div class="progress">
         <div class="progress-bar w-75" role="progressbar"aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
     </div>

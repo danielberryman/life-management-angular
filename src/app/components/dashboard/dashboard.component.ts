@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Section } from 'src/app/models/section';
-import { ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -35,5 +34,18 @@ export class DashboardComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, this.size);
+  }
+
+  deleteSection(id) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    this.http.delete('http://localhost:8080/sections/' + id, options)
+      .subscribe(() => {
+        this.sections = this.sections.filter(section => section.id !== id)
+      });
   }
 }

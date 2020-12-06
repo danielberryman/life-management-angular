@@ -4,14 +4,14 @@
     margin-top: 15px;
     width: 100%;
 }
-button {
+.section-button {
     background-color: white;
     color: black;
     border: none;
     height: 40px;
     width: 100%;
 }
-button:hover { 
+.section-button:hover { 
     background-color: black; 
     color: white;
 }
@@ -38,4 +38,9 @@ button:hover {
 .spacer {
     background-color: white; 
     width: 16px;
+}
+.delete, .edit {
+    margin-left: 10px;
+    margin-top: 6px;
+    width: 100px;
 }
