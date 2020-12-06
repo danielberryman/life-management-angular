@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Tab } from 'src/app/models/tab';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-sections',
@@ -16,8 +17,9 @@ export class SectionsComponent implements OnInit {
   tabs = [];
   selectedTab: Tab;
   plusIcon = faPlus;
+  size = 'xl';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.http.get('http://localhost:8080/tabs/all?id=' + this.section.id)
@@ -54,7 +56,7 @@ export class SectionsComponent implements OnInit {
     }
   }
 
-  onOpenModal(content) {
-    this.openModal.emit(content);
+  open(content) {
+    this.modalService.open(content, this.size);
   }
 }

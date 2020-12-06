@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Section } from 'src/app/models/section';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,9 @@ export class DashboardComponent implements OnInit {
   sections = [];
   closeResult ='';
   sectionTitle;
+  size = 'sm';
 
-  constructor(private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalService: ModalService) { }
 
   ngOnInit(): void {
     this.http.get('http://localhost:8080/sections/all')
@@ -31,23 +33,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  // Modal
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'sm'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(content, this.size);
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
 }
