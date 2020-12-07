@@ -1,5 +1,5 @@
 export interface Section {
     id: number;
-    name: string;
+    title: string;
     // percentComplete: number;
 }

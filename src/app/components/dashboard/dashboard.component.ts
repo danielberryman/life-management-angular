@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Section } from 'src/app/models/section';
 import { ModalService } from 'src/app/services/modal.service';
 
@@ -32,6 +32,13 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  editSection(obj) {
+    this.http.put('http://localhost:8080/sections/' + obj.id, obj.title)
+      .subscribe((data: Section) => {
+  
+      });
+  }
+
   open(content) {
     this.modalService.open(content, this.size);
   }
@@ -45,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
     this.http.delete('http://localhost:8080/sections/' + id, options)
       .subscribe(() => {
-        this.sections = this.sections.filter(section => section.id !== id)
+        this.sections = this.sections.filter(section => section.id !== id);
       });
   }
 }

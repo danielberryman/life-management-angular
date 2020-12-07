@@ -1,22 +1,36 @@
 <ng-template #content let-modal>
-    <div class="container" *ngIf="selectedTab">
+    <div class="container">
         <div class="modal-header" style="border: none">
-            <h1>{{section.title | uppercase}}</h1>
-            <button class="btn btn-success edit" (click)="edit()">Edit</button>
+            <ng-container 
+                *ngTemplateOutlet="titleMode ? editMode : displayMode; context: {$implicit: section.title}">
+            </ng-container>
+        
+            <ng-template #displayMode section.title>
+                <h1>{{section.title | uppercase}}</h1>
+                <button class="btn btn-success edit" (click)="edit()">Edit</button>
+            </ng-template>
+        
+            <ng-template #editMode section.title>
+                <input class="titleEdit" type="text" [(ngModel)]="section.title"/>
+                <button class="btn btn-primary save" (click)="onEditSectionSave(section.title)">Save</button>
+            </ng-template>
+
             <button class="btn btn-danger delete" (click)="onDeleteSection(); modal.close('Cross click')">Delete</button>
             <button class="section-button close" (click)="modal.close('Cross click')">&times;</button>
         </div>
         <div class="modal-body">
-            <ul class="nav nav-tabs">
-                <li class="nav-item" *ngFor="let tab of tabs; let i = index">
-                    <a class="nav-link" href="#" [ngClass]="{'active': tab.active}" (click)="setSelectedTab(tab)">{{tab.title}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link add-tab" href="#"><fa-icon [icon]="plusIcon"></fa-icon></a>
-                </li>
-            </ul>
-            <app-section-details-toolbar></app-section-details-toolbar>
-            <app-section-details [tab]="selectedTab"></app-section-details>
+            <div *ngIf="selectedTab">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngFor="let tab of tabs; let i = index">
+                        <a class="nav-link" href="#" [ngClass]="{'active': tab.active}" (click)="setSelectedTab(tab)">{{tab.title}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link add-tab" href="#"><fa-icon [icon]="plusIcon"></fa-icon></a>
+                    </li>
+                </ul>
+                <app-section-details-toolbar></app-section-details-toolbar>
+                <app-section-details [tab]="selectedTab"></app-section-details>
+            </div>
         </div>
     </div>
 </ng-template>
