@@ -4,27 +4,3 @@ h1 {
     text-align: center;
     text-transform: uppercase;
 }
-.wrapper {
-    border: 1px solid grey;
-    margin-bottom: 0px;
-    margin-top: 15px;
-    width: 100%;
-}
-button {
-    background-color: white;
-    color: grey;
-    border: none;
-    height: 40px;
-    width: 100%;
-}
-button:hover { 
-    background-color: grey;
-    color: white;
-}
-
-// modal
-.close {
-    height: 3.5rem;
-    text-align: right;
-    width: 3rem;
-}

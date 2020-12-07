@@ -1,43 +1,32 @@
 <ng-template #content let-modal>
     <div class="container">
         <div class="modal-header" style="border: none">
-            <ng-container 
-                *ngTemplateOutlet="titleMode ? editMode : displayMode; context: {$implicit: section.title}">
-            </ng-container>
-        
-            <ng-template #displayMode section.title>
-                <h1>{{section.title | uppercase}}</h1>
-                <button class="btn btn-success edit" (click)="edit()">Edit</button>
-            </ng-template>
-        
-            <ng-template #editMode section.title>
-                <input class="titleEdit" type="text" [(ngModel)]="section.title"/>
-                <button class="btn btn-primary save" (click)="onEditSectionSave(section.title)">Save</button>
-            </ng-template>
-
-            <button class="btn btn-danger delete" (click)="onDeleteSection(); modal.close('Cross click')">Delete</button>
-            <button class="section-button close" (click)="modal.close('Cross click')">&times;</button>
+            <h3>Add a Section</h3>
+            <button class="close" (click)="modal.close('Cross click')">&times;</button>
         </div>
         <div class="modal-body">
-            <div *ngIf="selectedTab">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item" *ngFor="let tab of tabs; let i = index">
-                        <a class="nav-link" href="#" [ngClass]="{'active': tab.active}" (click)="setSelectedTab(tab)">{{tab.title}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link add-tab" href="#"><fa-icon [icon]="plusIcon"></fa-icon></a>
-                    </li>
-                </ul>
-                <app-section-details-toolbar></app-section-details-toolbar>
-                <app-section-details [tab]="selectedTab"></app-section-details>
-            </div>
+            <input name="sectionTitle" type="text" [(ngModel)]="sectionTitle" />
+            <button class="btn" name="sectionTitle" (click)="addSection(sectionTitle)">Submit</button>
         </div>
     </div>
 </ng-template>
 
-<div class="wrapper">
-    <button class="section-button" (click)="open(content)">{{section.title | uppercase}}</button>
-    <div class="progress">
-        <div class="progress-bar w-75" role="progressbar"aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-6">
+        <div class="col">
+            <div class="wrapper">
+                <button class="section-button" (click)="open(content)">ADD CARD +</button>
+            </div>
+        </div>
+        <div *ngFor="let section of sections">
+            <div class="col">
+                <app-section
+                    [section]="section"
+                    (openModal)="open($event)"
+                    (deleteSection)="deleteSection($event)"
+                ></app-section>
+            </div>
+        </div>
     </div>
 </div>
+            

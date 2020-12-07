@@ -1,0 +1,33 @@
+<ng-template #content let-modal>
+    <div class="container">
+        <div class="modal-header" style="border: none">
+            <ng-container 
+                *ngTemplateOutlet="titleMode ? editMode : displayMode; context: {$implicit: section.title}">
+            </ng-container>
+        
+            <ng-template #displayMode section.title>
+                <h1>{{section.title | uppercase}}</h1>
+                <button class="btn btn-success edit" (click)="toggleEditMode()">Edit</button>
+            </ng-template>
+        
+            <ng-template #editMode section.title>
+                <input class="titleEdit" type="text" [(ngModel)]="section.title"/>
+                <button class="btn btn-primary save" (click)="onEditSectionSave(section.title)">Save</button>
+            </ng-template>
+
+            <button class="btn btn-danger delete" (click)="onDeleteSection(); modal.close('Cross click')">Delete</button>
+            <button class="section-button close" (click)="modal.close('Cross click')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <app-tabs [section]="section"></app-tabs>
+        </div>
+    </div>
+</ng-template>
+    
+<div class="wrapper">
+    <button class="section-button" (click)="open(content)">{{section.title | uppercase}}</button>
+    <div class="progress">
+        <div class="progress-bar w-75" role="progressbar"aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+    

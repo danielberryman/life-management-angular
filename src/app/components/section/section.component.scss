@@ -1,0 +1,50 @@
+.wrapper {
+    border: 1px solid black;
+    margin-bottom: 0px;
+    margin-top: 15px;
+    width: 100%;
+}
+.section-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 40px;
+    width: 100%;
+}
+.section-button:hover { 
+    background-color: black; 
+    color: white;
+}
+.progress {
+    background-color: white;
+    height: 3px; 
+    margin-top: 0px;
+}
+.progress-bar {
+    height: 3px; 
+    margin-top: 0px; 
+    width: 25%;
+}
+
+// modal
+.close {
+    height: 3.5rem;
+    text-align: right;
+    width: 3rem;
+}
+.add-tab {
+    color: grey;
+}
+.spacer {
+    background-color: white; 
+    width: 16px;
+}
+.delete, .edit, .save {
+    margin-left: 10px;
+    margin-top: 6px;
+    width: 100px;
+}
+.titleEdit {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}

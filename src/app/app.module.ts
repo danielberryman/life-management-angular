@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { SectionComponent } from './components/section/section.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ModalComponent } from './components/modal/modal.component';
     SectionDetailsComponent,
     SectionDetailsToolbarComponent,
     TabsComponent,
-    ModalComponent
+    ModalComponent,
+    SectionComponent
   ],
   imports: [
     BrowserModule,

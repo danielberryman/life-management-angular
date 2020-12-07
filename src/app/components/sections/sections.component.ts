@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Tab } from 'src/app/models/tab';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ModalService } from 'src/app/services/modal.service';
+import { Section } from 'src/app/models/section';
 
 @Component({
   selector: 'app-sections',
@@ -10,74 +9,52 @@ import { ModalService } from 'src/app/services/modal.service';
   styleUrls: ['./sections.component.scss']
 })
 export class SectionsComponent implements OnInit {
-  @Output() openModal = new EventEmitter();
-  @Output() deleteSection = new EventEmitter();
-  @Output() editSection = new EventEmitter();
-  @Input() section;
-
-  closeResult = '';
-  tabs = [];
-  selectedTab: Tab;
-  plusIcon = faPlus;
-  size = 'xl';
-  titleMode = false;
+  sections = [];
+  size = 'sm';
+  content;
+  sectionTitle;
 
   constructor(private http: HttpClient, private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/tabs/all?id=' + this.section.id)
-    .subscribe((data: Tab[]) => {
-      this.tabs = data;
-      if (this.tabs.length > 0) {
-        this.tabs[0].active = true;
-        this.selectedTab = this.tabs[0];
-      }
-    }); 
+    // get all sections
+    this.http.get('http://localhost:8080/sections/all')
+      .subscribe((data: Section[]) => {
+        this.sections = data;
+        console.log(this.sections);
+      });
   }
 
-  setSelectedTab(tab) {
-    // If there's no previously selected tab we're in init fn
-    if (!this.selectedTab) {
-      this.tabs[0].active = true;
-      this.selectedTab = this.tabs[0];
-    } else {
-      tab.active = !tab.active;
-      if (this.selectedTab) {
-        this.selectedTab.active = !this.selectedTab.active;
-        this.selectedTab = tab;
-      } else {
-        this.selectedTab = tab;
-      }
-    }
-  }
-
-  resetSelectedTab() {
-    if (this.selectedTab != this.tabs[0]) {
-      this.selectedTab.active = false;
-      this.selectedTab = this.tabs[0];
-      this.selectedTab.active = true;
-    }
-  }
-
+  // MODAL
   open(content) {
     this.modalService.open(content, this.size);
   }
 
-  edit() {
-    this.changeMode();
-  }
-  
-  onEditSectionSave(editedTitle) {
-    this.editSection.emit({ title: editedTitle, id: this.section.id});
-    this.changeMode();
-  }
-
-  onDeleteSection() {
-    this.deleteSection.emit(this.section.id);
+  // CRUD
+  addSection(title) {
+    const url = 'http://localhost:8080/sections/add?title=' + title;
+    this.http.post(url, null)
+      .subscribe((data) => {
+        this.sections.push(data);
+      });
   }
 
-  changeMode () {
-    this.titleMode = !this.titleMode;
+  editSection(obj) {
+    this.http.put('http://localhost:8080/sections/' + obj.id, obj.title)
+      .subscribe((data: Section) => { });
+  }
+
+  deleteSection(id) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    this.http.delete('http://localhost:8080/sections/' + id, options)
+      .subscribe(() => {
+        this.sections = this.sections.filter(section => section.id !== id);
+      });
   }
 
 }

@@ -1,1 +1,13 @@
-<p>tabs works!</p>
+<ul class="nav nav-tabs">
+    <li class="nav-item" *ngIf="!selectedTab">
+        <a class="nav-link add-tab" href="#"><fa-icon [icon]="plusIcon"></fa-icon></a>
+    </li>
+    <li class="nav-item" *ngFor="let tab of tabs; let i = index">
+        <a class="nav-link" href="#" [ngClass]="{'active': tab.active}" (click)="setSelectedTab(tab)">{{tab.title}}</a>
+    </li>
+    <li class="nav-item" *ngIf="selectedTab">
+        <a class="nav-link add-tab" href="#"><fa-icon [icon]="plusIcon"></fa-icon></a>
+    </li>
+</ul>
+<!-- <app-section-details-toolbar></app-section-details-toolbar>
+<app-section-details [tab]="selectedTab"></app-section-details> -->
